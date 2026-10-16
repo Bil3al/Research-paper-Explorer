@@ -6,6 +6,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Internal reports & local documents
+avancement/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
