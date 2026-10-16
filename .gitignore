@@ -28,7 +28,7 @@ faiss_index/
 *.db
 
 # Data & Cache directories
-data/
+/data/
 cache/
 downloads/
 papers/
