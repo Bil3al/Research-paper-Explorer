@@ -74,6 +74,20 @@ RRF_K = 60
 BM25_K1 = 1.5  # Saturation des termes
 BM25_B = 0.75  # Pénalisation de la longueur du document
 
+
+# ==============================================================================
+# 5. PARAMÈTRES RECLASSEMENT PAR CROSS-ENCODER (RERANKER)
+# ==============================================================================
+
+# Modèle Cross-Encoder spécifié dans la proposition de projet S5
+DEFAULT_RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+
+# Nombre de passages finaux conservés après reclassement
+DEFAULT_RERANK_TOP_K = 3
+
+# Nombre de candidats préliminaires extraits par la recherche hybride
+DEFAULT_RERANK_CANDIDATES = 15
+
 # Catégories d'informatique ciblées pour notre corpus (arXiv cs.*)
 DEFAULT_ARXIV_CATEGORIES = [
     "cs.AI",  # Intelligence Artificielle générale

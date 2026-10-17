@@ -28,9 +28,10 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-from src.config import RRF_K
+from src.config import RRF_K, DEFAULT_RERANK_TOP_K, DEFAULT_RERANK_CANDIDATES
 from src.retrieval.vector_store import VectorStoreManager
 from src.retrieval.bm25_retriever import BM25Retriever
+from src.retrieval.reranker import CrossEncoderReranker
 
 logger = logging.getLogger(__name__)
 
@@ -169,7 +170,54 @@ class HybridRetriever:
                 "doi": doc_data.get("doi"),
                 "pdf_url": doc_data.get("pdf_url"),
                 "entry_id": doc_data.get("entry_id"),
-                "raw_content": doc_data.get("raw_content")
+                "raw_content": doc_data.get("raw_content"),
+                "search_content": doc_data.get("search_content")
             })
 
         return final_results
+
+    def search_and_rerank(
+        self,
+        query: str,
+        top_k: int = DEFAULT_RERANK_TOP_K,
+        num_candidates: int = DEFAULT_RERANK_CANDIDATES,
+        reranker: Optional[CrossEncoderReranker] = None,
+        category_filter: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Pipeline complet en Deux Étapes (Two-Stage Retrieval) :
+        1. Recherche Hybride (FAISS + BM25 via RRF) pour extraire `num_candidates` passages.
+        2. Reclassement par Cross-Encoder (MiniLM) pour sélectionner les `top_k` passages finaux.
+
+        Args:
+            query: Requête ou affirmation scientifique.
+            top_k: Nombre final de passages retournés.
+            num_candidates: Nombre de candidats pré-sélectionnés par RRF.
+            reranker: Instance optionnelle de CrossEncoderReranker.
+            category_filter: Filtre optionnel sur la catégorie arXiv.
+
+        Returns:
+            Les passages ultimes classés par pertinence Cross-Encoder.
+        """
+        # Étape 1 : Recherche hybride de candidats préliminaires
+        candidates = self.search(
+            query=query,
+            top_k=num_candidates,
+            category_filter=category_filter
+        )
+
+        if not candidates:
+            return []
+
+        # Initialiser le reranker si non fourni
+        rerank_engine = reranker or CrossEncoderReranker()
+
+        # Étape 2 : Reclassement de précision
+        reranked_results = rerank_engine.rerank(
+            query=query,
+            documents=candidates,
+            top_k=top_k
+        )
+
+        return reranked_results
+
