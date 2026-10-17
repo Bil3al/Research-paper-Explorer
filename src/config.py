@@ -57,6 +57,23 @@ VECTOR_DB_DIR = DATA_DIR / "vector_db"
 FAISS_INDEX_FILE = VECTOR_DB_DIR / "index.faiss"
 FAISS_METADATA_FILE = VECTOR_DB_DIR / "metadata.json"
 
+
+# ==============================================================================
+# 4. PARAMÈTRES RECHERCHE LEXICALE BM25 & FUSION HYBRIDE (RRF)
+# ==============================================================================
+
+# Dossier et fichiers de persistance pour BM25
+BM25_DIR = DATA_DIR / "bm25"
+BM25_INDEX_FILE = BM25_DIR / "bm25_corpus.pkl"
+BM25_METADATA_FILE = BM25_DIR / "bm25_metadata.json"
+
+# Constante k pour la formule Reciprocal Rank Fusion (standard académique: 60)
+RRF_K = 60
+
+# Paramètres standards BM25Okapi
+BM25_K1 = 1.5  # Saturation des termes
+BM25_B = 0.75  # Pénalisation de la longueur du document
+
 # Catégories d'informatique ciblées pour notre corpus (arXiv cs.*)
 DEFAULT_ARXIV_CATEGORIES = [
     "cs.AI",  # Intelligence Artificielle générale
