@@ -25,6 +25,22 @@ VECTOR_DB_DIR = DATA_DIR / "chroma_db"   # Persistance de la base vectorielle Ch
 # Fichier par défaut où sont stockés les articles collectés
 DEFAULT_METADATA_FILE = RAW_DATA_DIR / "arxiv_papers_metadata.jsonl"
 
+# Fichier par défaut où sont stockés les chunks découpés
+DEFAULT_CHUNKS_FILE = PROCESSED_DATA_DIR / "arxiv_chunks.jsonl"
+
+
+# ==============================================================================
+# 2. PARAMÈTRES POUR LE CHUNKING (Découpage textuel)
+# ==============================================================================
+
+# Taille idéale d'un chunk (en caractères, environ 150 à 250 mots / ~200 tokens)
+# Parfaitement adapté au modèle d'embedding bge-small-en-v1.5 (max 512 tokens)
+DEFAULT_CHUNK_SIZE = 800
+
+# Chevauchement (overlap) entre deux chunks consécutifs
+# Indispensable pour ne pas couper une phrase ou une preuve au milieu
+DEFAULT_CHUNK_OVERLAP = 150
+
 
 # ==============================================================================
 # 2. PARAMÈTRES POUR LA COLLECTE ARXIV
