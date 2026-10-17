@@ -43,8 +43,19 @@ DEFAULT_CHUNK_OVERLAP = 150
 
 
 # ==============================================================================
-# 2. PARAMÈTRES POUR LA COLLECTE ARXIV
+# 3. PARAMÈTRES VECTOR STORE & EMBEDDINGS (FAISS / Meta AI)
 # ==============================================================================
+
+# Modèle d'embeddings dense (SOTA compact pour l'anglais scientifique)
+DEFAULT_EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+
+# Dimension des vecteurs pour bge-small-en-v1.5
+EMBEDDING_DIMENSION = 384
+
+# Fichiers de persistance FAISS sur disque
+VECTOR_DB_DIR = DATA_DIR / "vector_db"
+FAISS_INDEX_FILE = VECTOR_DB_DIR / "index.faiss"
+FAISS_METADATA_FILE = VECTOR_DB_DIR / "metadata.json"
 
 # Catégories d'informatique ciblées pour notre corpus (arXiv cs.*)
 DEFAULT_ARXIV_CATEGORIES = [
