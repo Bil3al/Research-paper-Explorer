@@ -88,6 +88,25 @@ DEFAULT_RERANK_TOP_K = 3
 # Nombre de candidats préliminaires extraits par la recherche hybride
 DEFAULT_RERANK_CANDIDATES = 15
 
+
+# ==============================================================================
+# 6. PARAMÈTRES INFÉRENCE LOGIQUE NLI (DeBERTa-v3)
+# ==============================================================================
+
+# Modèle DeBERTa-v3 fine-tuné sur NLI (MNLI / FEVER / SNLI)
+DEFAULT_NLI_MODEL = "cross-encoder/nli-deberta-v3-small"
+
+# Mapping officiel des labels pour cross-encoder/nli-deberta-v3-small
+# 0: contradiction, 1: entailment, 2: neutral
+NLI_LABEL_MAPPING = {
+    0: "REFUTES",     # Contredit l'affirmation
+    1: "SUPPORTS",    # Soutient l'affirmation
+    2: "NEUTRAL"      # Neutre / Preuves insuffisantes
+}
+
+# Seuil de probabilité minimal pour considérer qu'un passage tranche nettement
+NLI_CONFIDENCE_THRESHOLD = 0.60
+
 # Catégories d'informatique ciblées pour notre corpus (arXiv cs.*)
 DEFAULT_ARXIV_CATEGORIES = [
     "cs.AI",  # Intelligence Artificielle générale
