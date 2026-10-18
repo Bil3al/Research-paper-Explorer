@@ -249,9 +249,11 @@ class ArxivCollector:
         logger.info(f"Lancement de la recherche avec la requête : '{query_str}'")
         logger.info(f"Objectif : {max_results} articles (Téléchargement PDF : {'Oui' if download_pdfs else 'Non'})")
 
+        # On demande un pool suffisant pour compenser les doublons déjà présents
+        search_limit = max_results + len(self.existing_ids)
         search = arxiv.Search(
             query=query_str,
-            max_results=max_results,
+            max_results=search_limit,
             sort_by=arxiv.SortCriterion.SubmittedDate,
             sort_order=arxiv.SortOrder.Descending # Récupérer les plus récents en premier
         )

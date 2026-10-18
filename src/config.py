@@ -133,7 +133,9 @@ DEFAULT_ARXIV_CATEGORIES = [
     "cs.CL",  # Traitement du Langage Naturel (NLP)
     "cs.LG",  # Machine Learning & Apprentissage profond
     "cs.CV",  # Vision par ordinateur
+    "cs.RO",  # Robotique
     "cs.SE",  # Génie logiciel
+    "cs.CR",  # Cryptographie et Sécurité
 ]
 
 # Délai de politesse (en secondes) entre les requêtes vers l'API arXiv
@@ -141,7 +143,7 @@ DEFAULT_ARXIV_CATEGORIES = [
 ARXIV_DELAY_SECONDS = 3.0
 
 # Nombre d'articles par page de requête (taille de lot)
-ARXIV_BATCH_SIZE = 50
+ARXIV_BATCH_SIZE = 100
 
 
 # ==============================================================================
