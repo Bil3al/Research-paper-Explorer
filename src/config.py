@@ -107,6 +107,26 @@ NLI_LABEL_MAPPING = {
 # Seuil de probabilité minimal pour considérer qu'un passage tranche nettement
 NLI_CONFIDENCE_THRESHOLD = 0.60
 
+
+# ==============================================================================
+# 7. PONDÉRATIONS POUR LE SCORE DE CONFIANCE COMPOSITE
+# ==============================================================================
+
+# Poids du consensus / accord entre sources (35%)
+WEIGHT_CONSENSUS = 0.35
+
+# Poids de la qualité sémantique du Cross-Encoder (25%)
+WEIGHT_RERANKER = 0.25
+
+# Poids de la force de déduction logique DeBERTa (25%)
+WEIGHT_NLI = 0.25
+
+# Poids de la récence des publications scientifiques (15%)
+WEIGHT_RECENCY = 0.15
+
+# Décroissance temporelle par an (lambda) pour le calcul de récence
+RECENCY_DECAY_RATE = 0.10
+
 # Catégories d'informatique ciblées pour notre corpus (arXiv cs.*)
 DEFAULT_ARXIV_CATEGORIES = [
     "cs.AI",  # Intelligence Artificielle générale
