@@ -1,18 +1,46 @@
-/* Simple, clean stylesheet – replaces the previous complex dark/glass design */
+/* ==============================================================================
+   VERITAS-CS : FEUILLE DE STYLE MINIMALISTE & ACADÉMIQUE
+   Inspirée des publications scientifiques (Nature, arXiv, PubMed, Our World in Data)
+   Zéro gradient flashy, zéro halo néon, bordures 1px nettes, contrastes élevés.
+   ============================================================================== */
 
-/* Color & spacing variables */
 :root {
-  --bg-primary: #fafafa;
-  --bg-secondary: #ffffff;
-  --bg-card: #f5f5f5;
-  --border-color: #d1d5db;
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6b7280;
-  --accent-blue: #2563eb;
-  --radius-lg: 12px;
-  --radius-md: 8px;
-  --radius-sm: 4px;
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-muted: #f1f5f9;
+  --bg-subtle: #f8fafc;
+
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-dark: #0f172a;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-code: #0f172a;
+
+  --accent-navy: #1e3a8a;
+  --accent-slate: #0f172a;
+
+  /* Statuts académiques sobres (tons plats et feutrés) */
+  --status-supported-bg: #f0fdf4;
+  --status-supported-border: #bbf7d0;
+  --status-supported-text: #166534;
+
+  --status-refuted-bg: #fef2f2;
+  --status-refuted-border: #fecaca;
+  --status-refuted-text: #991b1b;
+
+  --status-debated-bg: #fffbeb;
+  --status-debated-border: #fef3c7;
+  --status-debated-text: #92400e;
+
+  --status-insufficient-bg: #f8fafc;
+  --status-insufficient-border: #e2e8f0;
+  --status-insufficient-text: #475569;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', 'SFMono-Regular', Consolas, monospace;
 }
 
 * {
@@ -22,300 +50,565 @@
 }
 
 body {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-app);
   color: var(--text-primary);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
-.app-container {
-  max-width: 960px;
+/* Conteneur principal */
+.academic-container {
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem 1.25rem 4rem 1.25rem;
 }
 
-/* Header */
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
+/* ==============================================================================
+   EN-TÊTE INSTITUTIONNEL / MASTHEAD
+   ============================================================================== */
+.masthead {
+  border-bottom: 2px solid var(--border-dark);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
 }
-.brand-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--accent-blue);
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.3rem 0.8rem;
-  border-radius: 9999px;
-}
-.header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
-}
-.header-subtitle {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  max-width: 720px;
-  margin: 0 auto;
-}
-.tech-pills {
+
+.masthead-pretitle {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.tech-pill {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-sm);
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-}
-
-/* Search Card */
-.search-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-.search-label {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-}
-.claim-textarea {
-  width: 100%;
-  min-height: 80px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 0.8rem;
-  font-size: 1rem;
-  resize: vertical;
-}
-.search-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-.sample-claims {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.sample-title {
-  font-size: 0.8rem;
-  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--text-muted);
-  margin-right: 0.3rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.4rem;
 }
-.sample-btn {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-.sample-btn:hover {
-  background: var(--bg-secondary);
-  border-color: var(--accent-blue);
-}
-.action-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.retries-select {
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.4rem;
-  font-size: 0.85rem;
-}
-.verify-btn {
-  background: var(--accent-blue);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  cursor: pointer;
-}
-.verify-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(0,0,0,0.2);
-  border-top-color: var(--accent-blue);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
 
-/* Timeline */
-.timeline-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-.timeline-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.masthead-title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
+  margin-bottom: 0.4rem;
 }
-.agents-stepper {
+
+.masthead-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 860px;
+  line-height: 1.5;
+}
+
+/* Bandeau métriques du corpus (tableau de métadonnées dense) */
+.corpus-metabar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0.8rem;
+  gap: 1px;
+  background-color: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  margin-top: 1rem;
 }
-.agent-step {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 0.8rem;
-  text-align: center;
-  font-size: 0.85rem;
-}
-.agent-step.active { border-color: var(--accent-blue); }
-.agent-step.completed { border-color: #10b981; }
-.agent-header { font-weight: 600; margin-bottom: 0.3rem; }
-.agent-role { font-size: 0.75rem; color: var(--text-muted); }
 
-/* Feedback Banner */
-.feedback-banner {
-  background: #fee2e2;
-  border: 1px solid #fecaca;
-  color: #b91c1c;
-  padding: 0.8rem;
-  border-radius: var(--radius-md);
-  margin-bottom: 1rem;
+.metabar-cell {
+  background-color: var(--bg-surface);
+  padding: 0.5rem 0.75rem;
+}
+
+.metabar-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+}
+
+.metabar-val {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ==============================================================================
+   BLOCS DE CONTENU & PANELS
+   ============================================================================== */
+.academic-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-heading {
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+}
+
+/* ==============================================================================
+   ZONE DE SAISIE DE LA CLAIM (ASSERTION)
+   ============================================================================== */
+.assertion-textarea {
+  width: 100%;
+  min-height: 85px;
+  border: 1px solid var(--border-strong);
+  background-color: #ffffff;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  resize: vertical;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.15s ease;
+}
+
+.assertion-textarea:focus {
+  border-color: var(--border-dark);
+}
+
+/* Exemples d'affirmations scientifiques */
+.sample-assertions-box {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sample-assertion-btn {
+  background: none;
+  border: none;
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  border-left: 2px solid transparent;
+}
+
+.sample-assertion-btn:hover {
+  background-color: var(--bg-muted);
+  color: var(--text-primary);
+  border-left-color: var(--border-dark);
+}
+
+.sample-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  white-space: nowrap;
+}
+
+/* Barre de contrôles et bouton */
+.submission-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.retries-control {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Verdict Hero */
-.verdict-hero {
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--border-color);
+.retries-control select {
+  border: 1px solid var(--border-strong);
+  background: #ffffff;
+  padding: 0.3rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  border-radius: 2px;
+  color: var(--text-primary);
 }
-.verdict-badge {
+
+.btn-verify {
+  background-color: var(--accent-slate);
+  color: #ffffff;
+  border: 1px solid var(--accent-slate);
+  padding: 0.55rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
+  gap: 0.5rem;
 }
-.badge-soutenu { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
-.badge-refute { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
-.badge-debattu { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
-.badge-neutre { background: #e5e7eb; color: #374151; border: 1px solid #9ca3af; }
-.confidence-gauge-box {
+
+.btn-verify:hover:not(:disabled) {
+  background-color: #334155;
+  border-color: #334155;
+}
+
+.btn-verify:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==============================================================================
+   VISUALISATION MULTI-AGENTS (JOURNAL SÉQUENTIEL DISCRET)
+   ============================================================================== */
+.agents-trace-container {
+  margin-top: 0.5rem;
+  border-left: 2px solid var(--border-strong);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.agent-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.agent-identity {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  background: var(--bg-secondary);
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
+  gap: 0.5rem;
 }
-.gauge-value { font-size: 1.8rem; font-weight: 700; }
-.gauge-label { font-size: 0.85rem; color: var(--text-secondary); }
 
-/* Breakdown */
-.breakdown-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.8rem;
-  margin-top: 1rem;
+.agent-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
-.metric-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 0.8rem;
-}
-.metric-header {
-  font-size: 0.85rem;
+
+.agent-name {
   font-weight: 600;
+  color: var(--text-primary);
+}
+
+.agent-spec {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.agent-badge-state {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.state-waiting { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+.state-running { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-weight: 600; }
+.state-done    { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-weight: 600; }
+
+.feedback-trigger-box {
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-left: 3px solid #f59e0b;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.82rem;
+  color: #92400e;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+/* ==============================================================================
+   VERDICT & SYNTHÈSE HERO
+   ============================================================================== */
+.verdict-box {
+  border-radius: 2px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.verdict-box.SOUTENU {
+  background-color: var(--status-supported-bg);
+  border-color: var(--status-supported-border);
+}
+
+.verdict-box.REFUTE {
+  background-color: var(--status-refuted-bg);
+  border-color: var(--status-refuted-border);
+}
+
+.verdict-box.SUJET_DEBATTU {
+  background-color: var(--status-debated-bg);
+  border-color: var(--status-debated-border);
+}
+
+.verdict-box.PREUVES_INSUFFISANTES {
+  background-color: var(--status-insufficient-bg);
+  border-color: var(--status-insufficient-border);
+}
+
+.verdict-meta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.verdict-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.verdict-label-badge {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.badge-soutenu { color: var(--status-supported-text); }
+.badge-refute { color: var(--status-refuted-text); }
+.badge-debattu { color: var(--status-debated-text); }
+.badge-neutre { color: var(--status-insufficient-text); }
+
+.consensus-ratio-text {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Tableau des 4 dimensions de confiance */
+.confidence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin-top: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.confidence-table th,
+.confidence-table td {
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.confidence-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.confidence-table td.score-col {
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.verdict-explanation-p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ==============================================================================
+   SECTION "LIMITES & NUANCES SCIENTIFIQUES"
+   ============================================================================== */
+.nuances-box {
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--text-secondary);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.nuances-box h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
   margin-bottom: 0.4rem;
 }
-.metric-value {
-  font-size: 1.2rem;
+
+/* ==============================================================================
+   LISTE STRUCTURÉE DES PREUVES SCIENTIFIQUES
+   ============================================================================== */
+.evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.evidence-entry {
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  padding: 1.15rem 1.25rem;
+}
+
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.evidence-title {
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
+  color: var(--text-primary);
+  line-height: 1.35;
 }
-.metric-bar-bg {
+
+.stance-pill-flat {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.pill-supports { background: var(--status-supported-bg); color: var(--status-supported-text); border: 1px solid var(--status-supported-border); }
+.pill-refutes  { background: var(--status-refuted-bg); color: var(--status-refuted-text); border: 1px solid var(--status-refuted-border); }
+.pill-neutral  { background: var(--status-insufficient-bg); color: var(--status-insufficient-text); border: 1px solid var(--status-insufficient-border); }
+
+.evidence-metadata-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.evidence-link {
+  color: var(--accent-navy);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.evidence-link:hover {
+  color: #0f172a;
+}
+
+.verbatim-quote-block {
+  background-color: var(--bg-muted);
+  border-left: 2px solid var(--border-dark);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+.evidence-footer-audit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.audit-certificate {
+  color: var(--status-supported-text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rerank-metrics {
+  color: var(--text-muted);
+}
+
+/* ==============================================================================
+   TABLEAU D'AUDIT SÉQUENTIEL & TRACE SYSTEME
+   ============================================================================== */
+.logs-table {
   width: 100%;
-  height: 5px;
-  background: #e5e7eb;
-  border-radius: 2px;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  margin-top: 0.75rem;
 }
-.metric-bar-fill {
-  height: 100%;
-  border-radius: 2px;
+
+.logs-table th,
+.logs-table td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
 }
-.breakdown-explanation {
-  background: var(--bg-secondary);
-  border-left: 4px solid var(--accent-blue);
-  padding: 0.6rem 1rem;
-  margin-top: 0.8rem;
+
+.logs-table th {
+  background-color: var(--bg-muted);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.btn-toggle-collapsible {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
 }
 
-/* Evidence */
-.evidence-section { margin-top: 2rem; }
-.section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
-.evidence-cards-list { display: flex; flex-direction: column; gap: 1rem; }
-.evidence-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1rem; }
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
-.card-paper-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
-.stance-pill { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 9999px; }
-.pill-supports { background: #d1fae5; color: #065f46; }
-.pill-refutes { background: #fee2e2; color: #991b1b; }
-.pill-neutral { background: #e5e7eb; color: #374151; }
-.paper-meta-row, .paper-meta-item { font-size: 0.8rem; color: var(--text-muted); }
-.paper-link { color: var(--accent-blue); text-decoration: none; }
-.paper-link:hover { text-decoration: underline; }
-.quote-box { background: var(--bg-secondary); border-left: 3px solid #d1d5db; padding: 0.8rem; font-size: 0.9rem; font-style: italic; color: var(--text-secondary); margin-bottom: 0.5rem; }
-.card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-top: 0.5rem; }
-.audit-badge-valid { display: inline-flex; align-items: center; gap: 0.3rem; color: #10b981; font-weight: 600; }
-.scores-summary { display: flex; gap: 0.5rem; color: var(--text-secondary); }
+.btn-toggle-collapsible:hover {
+  color: var(--text-primary);
+}
 
-/* Logs */
-.logs-section { margin-top: 2rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1rem; }
-.logs-toggle { background: none; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: space-between; width: 100%; }
-.logs-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
-.logs-table th, .logs-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); }
-.logs-table th { color: var(--text-muted); text-align: left; }
-.log-agent { color: var(--accent-blue); font-weight: 600; }
-.log-action { font-family: monospace; color: #f59e0b; }
+.json-pre-box {
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 2px;
+  margin-top: 0.75rem;
+}
