@@ -90,11 +90,11 @@ Le cœur du système est modélisé sous la forme d'un graphe d'états cyclique 
 
 ## 📊 État du Corpus Scientifique Indexé
 
-Le corpus local est indexé sur **7 catégories majeures de l'informatique** :
-* **Articles arXiv indexés :** `2 445 articles`
-* **Passages contextualisés (Chunks) :** `6 008 chunks`
-* **Vecteurs FAISS :** `6 008 vecteurs (384 dimensions)`
-* **Catégories couvertes :** `cs.AI` (Intelligence Artificielle), `cs.LG` (Machine Learning), `cs.CV` (Vision par ordinateur), `cs.CL` (NLP & Langage), `cs.RO` (Robotique), `cs.SE` (Génie Logiciel), `cs.CR` (Cryptographie & Sécurité).
+Le corpus local est indexé sur **8 catégories majeures de l'informatique** :
+* **Articles arXiv indexés :** `4 627 articles`
+* **Passages contextualisés (Chunks) :** `11 432 chunks`
+* **Vecteurs FAISS :** `11 432 vecteurs (384 dimensions)`
+* **Catégories couvertes :** `cs.AI` (Intelligence Artificielle), `cs.LG` (Machine Learning), `cs.CV` (Vision par ordinateur), `cs.CL` (NLP & Langage), `cs.IR` (Recherche d'information & RAG), `cs.RO` (Robotique), `cs.SE` (Génie Logiciel), `cs.CR` (Cryptographie & Sécurité).
 
 ---
 

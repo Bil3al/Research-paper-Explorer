@@ -136,6 +136,7 @@ DEFAULT_ARXIV_CATEGORIES = [
     "cs.RO",  # Robotique
     "cs.SE",  # Génie logiciel
     "cs.CR",  # Cryptographie et Sécurité
+    "cs.IR",  # Recherche d'information & Systèmes de RAG
 ]
 
 # Délai de politesse (en secondes) entre les requêtes vers l'API arXiv

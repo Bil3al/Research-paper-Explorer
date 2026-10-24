@@ -98,12 +98,13 @@ def run_collection_step(target_total: int) -> int:
     # cs.LG (Machine Learning), cs.AI (Intelligence Artificielle), cs.CV (Vision),
     # cs.CL (NLP), cs.RO (Robotique), cs.SE (Génie Logiciel), cs.CR (Cryptographie/Sécurité)
     category_weights = {
-        "cs.LG": 0.28,  # ~28% Machine Learning
-        "cs.AI": 0.24,  # ~24% Intelligence Artificielle
-        "cs.CV": 0.18,  # ~18% Vision par ordinateur
+        "cs.LG": 0.25,  # ~25% Machine Learning
+        "cs.AI": 0.22,  # ~22% Intelligence Artificielle
         "cs.CL": 0.18,  # ~18% NLP & LLMs
-        "cs.RO": 0.06,  # ~6% Robotique
-        "cs.CR": 0.03,  # ~3% Sécurité & Crypto
+        "cs.CV": 0.16,  # ~16% Vision par ordinateur
+        "cs.IR": 0.07,  # ~7% Recherche d'information & RAG
+        "cs.RO": 0.05,  # ~5% Robotique
+        "cs.CR": 0.04,  # ~4% Sécurité & Cryptographie
         "cs.SE": 0.03,  # ~3% Génie logiciel
     }
 

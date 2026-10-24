@@ -25,6 +25,16 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+import os
+import torch
+
+# Optimisation multi-cœurs CPU (utilise tous les cœurs logiques disponibles)
+if hasattr(torch, "set_num_threads"):
+    try:
+        torch.set_num_threads(os.cpu_count() or 8)
+    except Exception:
+        pass
+
 import numpy as np
 import faiss
 from sentence_transformers import SentenceTransformer
