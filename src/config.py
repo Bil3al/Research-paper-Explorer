@@ -148,7 +148,21 @@ ARXIV_BATCH_SIZE = 100
 
 
 # ==============================================================================
-# 3. CRÉATION AUTOMATIQUE DES DOSSIERS
+# 8. PARAMÈTRES LLM LOCAL OLLAMA (Qwen 2.5)
+# ==============================================================================
+
+# URL de l'instance locale Ollama
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+
+# Modèle LLM par défaut (Qwen 2.5 3B local)
+DEFAULT_LLM_MODEL = os.getenv("DEFAULT_LLM_MODEL", "qwen2.5:3b")
+
+# Timeout maximal en secondes pour les requêtes LLM
+LLM_TIMEOUT_SECONDS = 30
+
+
+# ==============================================================================
+# 9. CRÉATION AUTOMATIQUE DES DOSSIERS
 # ==============================================================================
 
 def init_directories():

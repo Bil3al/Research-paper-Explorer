@@ -118,7 +118,8 @@ def get_corpus_stats() -> Dict[str, Any]:
         "bm25_index_ready": BM25_INDEX_FILE.exists(),
         "supported_categories": DEFAULT_ARXIV_CATEGORIES,
         "embedding_dimensions": 384,
-        "hybrid_method": "Reciprocal Rank Fusion (RRF, k=60) + Cross-Encoder"
+        "hybrid_method": "Reciprocal Rank Fusion (RRF, k=60) + Cross-Encoder",
+        "llm_model": "Qwen 2.5 3B (Ollama)"
     }
 
 
@@ -147,6 +148,7 @@ def verify_claim(request: VerificationRequest) -> Dict[str, Any]:
             "refutes_count": final_report.get("refutes_count", 0),
             "neutral_count": final_report.get("neutral_count", 0),
             "total_evidence_evaluated": final_report.get("total_evidence_evaluated", 0),
+            "executive_summary": final_report.get("executive_summary"),
             "evidences": final_report.get("evidences", []),
             "agent_logs": final_state.get("agent_logs", []),
             "feedback_history": final_state.get("feedback_history", []),
@@ -205,6 +207,7 @@ async def verify_claim_stream(request: VerificationRequest):
                 "verdict_fr": final_report.get("verdict_fr"),
                 "confidence_score": final_report.get("confidence_score"),
                 "confidence_breakdown": accumulated_state.get("confidence_breakdown"),
+                "executive_summary": final_report.get("executive_summary"),
                 "evidences": final_report.get("evidences", []),
                 "agent_logs": accumulated_state.get("agent_logs", []),
                 "feedback_history": accumulated_state.get("feedback_history", []),

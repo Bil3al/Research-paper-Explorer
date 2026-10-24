@@ -35,6 +35,7 @@ from src.verification.nli_evaluator import NLIEvaluator, StanceResult
 from src.verification.citation_verifier import CitationVerifier
 from src.verification.confidence_scorer import ConfidenceScorer
 from src.verification.schemas import EvidenceItem, ClaimVerificationReport
+from src.llm.ollama_client import QwenLLMClient
 from src.agents.state import VerificationState, format_agent_log
 
 logger = logging.getLogger(__name__)
@@ -51,6 +52,13 @@ class ModelRegistry:
     _nli: Optional[NLIEvaluator] = None
     _verifier: Optional[CitationVerifier] = None
     _scorer: Optional[ConfidenceScorer] = None
+    _llm: Optional[QwenLLMClient] = None
+
+    @classmethod
+    def get_llm(cls) -> QwenLLMClient:
+        if cls._llm is None:
+            cls._llm = QwenLLMClient()
+        return cls._llm
 
     @classmethod
     def get_hybrid(cls) -> HybridRetriever:
@@ -140,50 +148,46 @@ def detect_target_categories(keywords: List[str]) -> List[str]:
 
 def analyzer_node(state: VerificationState) -> Dict[str, Any]:
     """
-    Nœud 1 : Analyse l'affirmation, extrait les concepts scientifiques,
+    Nœud 1 : Analyse l'affirmation avec le LLM Qwen 2.5, extrait les concepts scientifiques,
     sélectionne les catégories cibles, ou reformule la requête en cas de feedback.
     """
     iteration = state.get("iteration_count", 0)
     claim = state.get("claim", "")
+    llm = ModelRegistry.get_llm()
 
     # CAS A : Première passe d'analyse (Round 0)
     if iteration == 0:
-        keywords = extract_scientific_keywords(claim)
+        decomposition = llm.decompose_claim(claim)
+        llm_keywords = decomposition.get("keywords", [])
+        keywords = llm_keywords if llm_keywords else extract_scientific_keywords(claim)
         target_cats = detect_target_categories(keywords)
         current_query = claim
 
+        engine_badge = "Qwen 2.5 (Ollama)" if llm.is_available() else "Heuristique"
         log = format_agent_log(
             agent_name="Agent Analyseur",
-            action="ANALYSE_INITIALE",
-            details=f"Concepts extraits: {keywords[:5]} | Catégories arXiv ciblées: {target_cats}"
+            action="DECOMPOSITION_LLM",
+            details=f"[{engine_badge}] Concepts extraits: {keywords[:5]} | Catégories arXiv: {target_cats}"
         )
 
         return {
             "current_query": current_query,
             "extracted_keywords": keywords,
             "target_categories": target_cats,
-            "query_reformulation_notes": "Formulation initiale directe",
+            "query_reformulation_notes": f"Analyse initiale {engine_badge}",
             "agent_logs": [log]
         }
 
     # CAS B : Boucle de rétroaction active (Round > 0)
-    keywords = state.get("extracted_keywords", [])
-    if not keywords:
-        keywords = extract_scientific_keywords(claim)
+    feedback_reason = state.get("feedback_reason", "Preuves insuffisantes")
+    reformulated_query = llm.reformulate_query(claim, feedback_reason)
 
-    # Stratégie de reformulation : focalisation sur les mots-clés scientifiques clés
-    # pour maximiser le rappel lexical (BM25) et l'alignement sémantique (FAISS)
-    key_terms = " ".join(keywords[:6])
-    reformulated_query = f"{claim} {key_terms}"
-    
-    # Élargir les catégories arXiv au pool général pour maximiser la découverte
     expanded_cats = sorted(list(set(state.get("target_categories", []) + ["cs.AI", "cs.LG"])))
-
-    notes = f"Reformulation active (Round {iteration}) : focalisation sur [{key_terms}] avec élargissement aux catégories {expanded_cats}"
+    notes = f"Reformulation Qwen 2.5 (Round {iteration}) : « {reformulated_query} » (catégories: {expanded_cats})"
 
     log = format_agent_log(
         agent_name="Agent Analyseur",
-        action="REFORMULATION_FEEDBACK",
+        action="REFORMULATION_LLM",
         details=notes
     )
 
@@ -409,6 +413,16 @@ def synthesis_node(state: VerificationState) -> Dict[str, Any]:
     # Reconstruction des objets EvidenceItem
     evidence_objs = [EvidenceItem(**e) for e in evidences_raw]
 
+    # Génération de la synthèse analytique avec le LLM Qwen 2.5
+    llm = ModelRegistry.get_llm()
+    executive_summary = llm.generate_executive_summary(
+        claim=claim,
+        verdict=summary.get("global_verdict", "PREUVES_INSUFFISANTES"),
+        verdict_fr=summary.get("verdict_fr", "Preuves insuffisantes"),
+        evidences=evidences_raw,
+        confidence=breakdown.composite_score
+    )
+
     # Génération du rapport officiel
     report = ClaimVerificationReport(
         claim=claim,
@@ -420,13 +434,15 @@ def synthesis_node(state: VerificationState) -> Dict[str, Any]:
         refutes_count=summary.get("refutes_count", 0),
         neutral_count=summary.get("neutral_count", 0),
         total_evidence_evaluated=summary.get("total_evaluated", len(evaluated)),
+        executive_summary=executive_summary,
         evidences=evidence_objs
     )
 
+    engine_badge = "Qwen 2.5 (Ollama)" if llm.is_available() else "Heuristique"
     log = format_agent_log(
         agent_name="Agent Synthèse",
-        action="SYNTHESE_FINALE",
-        details=f"Verdict: {report.verdict} | Confiance Composite: {report.confidence_score * 100:.1f}% | Rapport Pydantic certifié généré"
+        action="SYNTHESE_LLM",
+        details=f"[{engine_badge}] Verdict: {report.verdict} | Confiance: {report.confidence_score * 100:.1f}% | Synthèse rédigée avec succès"
     )
 
     return {

@@ -82,7 +82,8 @@ Le cœur du système est modélisé sous la forme d'un graphe d'états cyclique 
 | **Recherche Lexicale** | `rank_bm25` (BM25Okapi) | Capture exacte des acronymes (`LoRA`, `DeBERTa`, etc.) et versions |
 | **Fusion Hybride** | Reciprocal Rank Fusion (RRF) | Standard académique ($k=60$) pour combiner dense et sparse sans biais d'échelle |
 | **Reranker** | Cross-Encoder `ms-marco-MiniLM-L-6-v2` | Attention croisée requête-document pour réordonner le Top-K passages |
-| **Inférence Logique** | `cross-encoder/nli-deberta-v3-small` | Déduction NLI formelle sans risque d'hallucination de LLM génératif |
+| **LLM Local (Raisonnement & Synthèse)** | [Qwen 2.5 3B (Ollama)](https://ollama.com/) | Décomposition d'affirmations scientifiques, reformulation active et rédaction de synthèse |
+| **Inférence Logique NLI** | `cross-encoder/nli-deberta-v3-small` | Déduction NLI formelle sans risque d'hallucination de LLM génératif |
 | **Backend API** | [FastAPI](https://fastapi.tiangolo.com/) | API REST asynchrone haute performance + documentation OpenAPI |
 | **Interface Dashboard** | [React](https://react.dev/) + [Vite](https://vitejs.dev/) | Dashboard moderne, clair et sobre, avec affichage des agents et scores |
 

@@ -179,6 +179,10 @@ export default function App() {
               <span className="metabar-label">Inférence Logique</span>
               <span className="metabar-val">DeBERTa-v3 MNLI</span>
             </div>
+            <div className="metabar-cell">
+              <span className="metabar-label">LLM Local</span>
+              <span className="metabar-val">{stats.llm_model || 'Qwen 2.5 3B (Ollama)'}</span>
+            </div>
           </div>
         )}
       </header>
@@ -415,9 +419,20 @@ export default function App() {
                   </tbody>
                 </table>
 
+                {result.executive_summary && (
+                  <div style={{ marginTop: '0.85rem', padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.85)', border: '1px solid rgba(0,0,0,0.08)', borderLeft: '3px solid var(--accent-navy)' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--accent-navy)', fontWeight: 700, display: 'block', marginBottom: '0.3rem' }}>
+                      Synthèse Analytique Rédigée par Qwen 2.5 (Ollama) :
+                    </span>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.55 }}>
+                      {result.executive_summary}
+                    </p>
+                  </div>
+                )}
+
                 {breakdown.explanation && (
                   <p className="verdict-explanation-p">
-                    <strong>Synthèse analytique :</strong> {breakdown.explanation}
+                    <strong>Pondération des métriques :</strong> {breakdown.explanation}
                   </p>
                 )}
               </section>

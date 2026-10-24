@@ -77,6 +77,7 @@ class ClaimVerificationReport(BaseModel):
     refutes_count: int = Field(description="Nombre d'extraits concluant que l'affirmation est scientifiquement réfutée")
     neutral_count: int = Field(description="Nombre d'extraits neutres ou non concluants")
     total_evidence_evaluated: int = Field(description="Nombre total de passages évalués")
+    executive_summary: Optional[str] = Field(default=None, description="Synthèse analytique rédigée par le LLM Qwen 2.5")
     evidences: List[EvidenceItem] = Field(description="Liste ordonnée des preuves textuelles avec métadonnées complètes")
     generated_at: str = Field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat(),
